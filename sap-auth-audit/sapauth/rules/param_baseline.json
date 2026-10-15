@@ -1,0 +1,92 @@
+{
+  "missing_rule": {
+    "rule_id": "PARAM-00",
+    "severity": "low",
+    "title": "Baseline profile parameter missing from export",
+    "sap_ref": "RZ11 / RSPARAM",
+    "remediation": "Verify effective kernel default in RZ11 or RSPARAM and include parameter in instance profile."
+  },
+  "parameters": [
+    {
+      "rule_id": "PARAM-01",
+      "name": "login/no_automatic_user_sapstar",
+      "op": "eq",
+      "expected": 1,
+      "severity": "high",
+      "title": "Automatic SAP* fallback user must be disabled",
+      "sap_ref": "RZ11 / login/no_automatic_user_sapstar",
+      "remediation": "Set login/no_automatic_user_sapstar = 1 in DEFAULT.PFL and restart the application server."
+    },
+    {
+      "rule_id": "PARAM-02",
+      "name": "rsau/enable",
+      "op": "eq",
+      "expected": 1,
+      "severity": "high",
+      "title": "Security Audit Log (SM19/SM20) must be active",
+      "sap_ref": "RZ11 / SM19 / rsau/enable",
+      "remediation": "Set rsau/enable = 1 and configure static audit filters in SM19/RSAU_CONFIG."
+    },
+    {
+      "rule_id": "PARAM-03",
+      "name": "auth/rfc_authority_check",
+      "op": "ge",
+      "expected": 1,
+      "severity": "high",
+      "title": "RFC authorization check (S_RFC) must be enforced",
+      "sap_ref": "RZ11 / auth/rfc_authority_check",
+      "remediation": "Set auth/rfc_authority_check >= 1 (recommended 6 or 9) to enforce S_RFC checks on all calls."
+    },
+    {
+      "rule_id": "PARAM-04",
+      "name": "login/min_password_lng",
+      "op": "ge",
+      "expected": 8,
+      "severity": "medium",
+      "title": "Minimum password length below baseline",
+      "sap_ref": "RZ11 / login/min_password_lng",
+      "remediation": "Set login/min_password_lng >= 8 (or 12+ per corporate identity policy) in DEFAULT.PFL."
+    },
+    {
+      "rule_id": "PARAM-05",
+      "name": "login/fails_to_user_lock",
+      "op": "le",
+      "expected": 5,
+      "severity": "medium",
+      "title": "Failed logon lockout threshold too permissive",
+      "sap_ref": "RZ11 / login/fails_to_user_lock",
+      "remediation": "Set login/fails_to_user_lock <= 5 to mitigate brute-force password guessing."
+    },
+    {
+      "rule_id": "PARAM-06",
+      "name": "login/fails_to_session_end",
+      "op": "le",
+      "expected": 3,
+      "severity": "medium",
+      "title": "Failed logon attempts per session too permissive",
+      "sap_ref": "RZ11 / login/fails_to_session_end",
+      "remediation": "Set login/fails_to_session_end <= 3 to terminate SAP GUI sessions after repeated bad passwords."
+    },
+    {
+      "rule_id": "PARAM-07",
+      "name": "login/password_expiration_time",
+      "op": "range",
+      "min": 1,
+      "max": 90,
+      "severity": "medium",
+      "title": "Password expiration interval outside baseline (1-90 days)",
+      "sap_ref": "RZ11 / login/password_expiration_time",
+      "remediation": "Set login/password_expiration_time between 1 and 90 days for dialog password rotation."
+    },
+    {
+      "rule_id": "PARAM-08",
+      "name": "login/disable_multi_gui_login",
+      "op": "eq",
+      "expected": 1,
+      "severity": "low",
+      "title": "Multiple concurrent SAP GUI logons allowed",
+      "sap_ref": "RZ11 / login/disable_multi_gui_login",
+      "remediation": "Set login/disable_multi_gui_login = 1 to prevent shared credential usage across terminals."
+    }
+  ]
+}

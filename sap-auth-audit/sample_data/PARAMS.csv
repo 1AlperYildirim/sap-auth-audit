@@ -1,0 +1,9 @@
+NAME,VALUE
+login/no_automatic_user_sapstar,0
+rsau/enable,0
+auth/rfc_authority_check,1
+login/min_password_lng,6
+login/fails_to_user_lock,12
+login/fails_to_session_end,3
+login/password_expiration_time,60
+login/disable_multi_gui_login,1

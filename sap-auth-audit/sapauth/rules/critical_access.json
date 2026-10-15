@@ -1,0 +1,311 @@
+{
+  "lifecycle_rules": {
+    "HYG-01_SAPSTAR": {
+      "rule_id": "HYG-01",
+      "severity": "critical",
+      "title": "Default superuser SAP* is unlocked",
+      "sap_ref": "SUIM RSUSR003 / USR02",
+      "remediation": "Lock SAP* in SU01 across all clients and set profile parameter login/no_automatic_user_sapstar = 1."
+    },
+    "HYG-01_STD": {
+      "rule_id": "HYG-01",
+      "severity": "high",
+      "title": "Standard user unlocked",
+      "sap_ref": "SUIM RSUSR003 / USR02",
+      "remediation": "Lock unused SAP standard accounts (EARLYWATCH, SAPCPIC) in SU01 and rotate default passwords."
+    },
+    "HYG-02_SAP_ALL": {
+      "rule_id": "HYG-02",
+      "severity": "critical",
+      "title": "Composite profile SAP_ALL assigned",
+      "sap_ref": "SUIM RSUSR002 / UST04",
+      "remediation": "Remove SAP_ALL from dialog and administrative accounts; use firefighter emergency access instead."
+    },
+    "HYG-02_SAP_NEW": {
+      "rule_id": "HYG-02",
+      "severity": "high",
+      "title": "Upgrade compatibility profile SAP_NEW assigned",
+      "sap_ref": "SUIM RSUSR002 / UST04",
+      "remediation": "Remove SAP_NEW from user master records and transfer required new authorizations into PFCG roles."
+    },
+    "HYG-03": {
+      "rule_id": "HYG-03",
+      "severity": "medium",
+      "title": "Dormant unlocked dialog user",
+      "sap_ref": "SUIM RSUSR200 / USR02",
+      "remediation": "Lock or expire dialog users inactive beyond the policy threshold and review role assignments."
+    },
+    "HYG-04": {
+      "rule_id": "HYG-04",
+      "severity": "low",
+      "title": "Unlocked dialog user never logged on (>30 days since creation)",
+      "sap_ref": "SUIM RSUSR200 / USR02",
+      "remediation": "Lock unused accounts provisioned over 30 days ago that have no initial logon date (TRDAT)."
+    },
+    "HYG-05": {
+      "rule_id": "HYG-05",
+      "severity": "low",
+      "title": "Excessive effective single roles assigned (>12)",
+      "sap_ref": "SUIM RSUSR002 / AGR_USERS",
+      "remediation": "Perform user access review to prune redundant roles from job transfers (privilege creep)."
+    }
+  },
+  "wildcard_tcode": {
+    "rule_id": "CA-00",
+    "severity": "critical",
+    "title": "Unrestricted transaction access (S_TCODE = *)",
+    "sap_ref": "SUIM RSUSR002 / S_TCODE",
+    "remediation": "Replace wildcard '*' in S_TCODE with explicit transaction codes in PFCG role menu."
+  },
+  "critical_tcodes": [
+    {
+      "tcode": "SM49",
+      "rule_id": "TC-SM49",
+      "severity": "critical",
+      "title": "External OS command execution (SM49)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SM49 to emergency Basis profiles only."
+    },
+    {
+      "tcode": "SM69",
+      "rule_id": "TC-SM69",
+      "severity": "critical",
+      "title": "External OS command maintenance (SM69)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Remove SM69 from production roles; maintain OS commands via transport."
+    },
+    {
+      "tcode": "SE38",
+      "rule_id": "TC-SE38",
+      "severity": "critical",
+      "title": "ABAP Editor access in production (SE38)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Revoke SE38 in production systems; execute reports via custom transactions."
+    },
+    {
+      "tcode": "SM59",
+      "rule_id": "TC-SM59",
+      "severity": "critical",
+      "title": "RFC destination maintenance (SM59)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SM59 modification access to core Basis administrators."
+    },
+    {
+      "tcode": "SCC4",
+      "rule_id": "TC-SCC4",
+      "severity": "critical",
+      "title": "Client administration and change lock settings (SCC4)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SCC4 to controlled firefighter profiles to prevent opening production clients."
+    },
+    {
+      "tcode": "RZ10",
+      "rule_id": "TC-RZ10",
+      "severity": "critical",
+      "title": "System profile parameter maintenance (RZ10)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict RZ10 to senior Basis administrators; use RZ11 for display."
+    },
+    {
+      "tcode": "SE80",
+      "rule_id": "TC-SE80",
+      "severity": "high",
+      "title": "Object Navigator access in production (SE80)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Remove SE80 from production roles."
+    },
+    {
+      "tcode": "SE37",
+      "rule_id": "TC-SE37",
+      "severity": "high",
+      "title": "Function Builder test/execution in production (SE37)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Remove SE37 from production users to prevent direct BAPI/RFC invocation."
+    },
+    {
+      "tcode": "SA38",
+      "rule_id": "TC-SA38",
+      "severity": "high",
+      "title": "ABAP Program Execution (SA38)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Replace blanket SA38 access with dedicated report transactions and program groups."
+    },
+    {
+      "tcode": "SE16N",
+      "rule_id": "TC-SE16N",
+      "severity": "high",
+      "title": "General Table Display (SE16N)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SE16N in production and pair with strict S_TABU_NAM/S_TABU_DIS display controls."
+    },
+    {
+      "tcode": "SM30",
+      "rule_id": "TC-SM30",
+      "severity": "high",
+      "title": "Direct table view maintenance (SM30)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Replace generic SM30 with custom parameter transactions locked to specific table views."
+    },
+    {
+      "tcode": "SM31",
+      "rule_id": "TC-SM31",
+      "severity": "high",
+      "title": "Legacy table maintenance (SM31)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Remove SM31 from production dialog roles."
+    },
+    {
+      "tcode": "SU01",
+      "rule_id": "TC-SU01",
+      "severity": "high",
+      "title": "User Master Maintenance (SU01)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SU01 to dedicated security administrators and scope by user group (S_USER_GRP)."
+    },
+    {
+      "tcode": "SU10",
+      "rule_id": "TC-SU10",
+      "severity": "high",
+      "title": "User Mass Maintenance (SU10)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SU10 to senior security administrators."
+    },
+    {
+      "tcode": "PFCG",
+      "rule_id": "TC-PFCG",
+      "severity": "high",
+      "title": "Role Maintenance and Profile Generation (PFCG)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Disable role editing in production; transport roles from DEV via STMS."
+    },
+    {
+      "tcode": "STMS",
+      "rule_id": "TC-STMS",
+      "severity": "high",
+      "title": "Transport Management System (STMS)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Limit STMS import permissions to Basis release management team."
+    },
+    {
+      "tcode": "SM36",
+      "rule_id": "TC-SM36",
+      "severity": "high",
+      "title": "Background Job Scheduling (SM36)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SM36 to batch operations staff and prevent scheduling under privileged step users."
+    },
+    {
+      "tcode": "AL11",
+      "rule_id": "TC-AL11",
+      "severity": "high",
+      "title": "SAP Directories / OS File System Browser (AL11)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Remove AL11 from business roles to protect OS file shares and interface files."
+    },
+    {
+      "tcode": "SICF",
+      "rule_id": "TC-SICF",
+      "severity": "high",
+      "title": "HTTP/ICF Service Hierarchy Maintenance (SICF)",
+      "sap_ref": "SUIM RSUSR002 / S_TCODE",
+      "remediation": "Restrict SICF service activation to Basis administrators."
+    }
+  ],
+  "critical_auths": [
+    {
+      "rule_id": "CA-01",
+      "object": "S_DEVELOP",
+      "fields": {
+        "OBJTYPE": ["DEBUG"],
+        "ACTVT": ["02"]
+      },
+      "severity": "critical",
+      "title": "ABAP Debugger with variable change/replace (S_DEVELOP DEBUG/02)",
+      "sap_ref": "SUIM RSUSR005 / S_DEVELOP",
+      "remediation": "Set ACTVT=03 for S_DEVELOP OBJTYPE=DEBUG in production; grant ACTVT=02 only via firefighter."
+    },
+    {
+      "rule_id": "CA-02",
+      "object": "S_TABU_DIS",
+      "fields": {
+        "DICBERCLS": ["*"],
+        "ACTVT": ["02"]
+      },
+      "severity": "critical",
+      "title": "Unrestricted table change across all authorization groups (S_TABU_DIS */02)",
+      "sap_ref": "SUIM RSUSR005 / S_TABU_DIS",
+      "remediation": "Replace DICBERCLS=* and ACTVT=02 with explicit table authorization groups and display-only (03)."
+    },
+    {
+      "rule_id": "CA-03",
+      "object": "S_USER_PRO",
+      "fields": {
+        "PROFILE": ["*"],
+        "ACTVT": ["22"]
+      },
+      "severity": "critical",
+      "title": "Unrestricted authorization profile assignment including SAP_ALL (S_USER_PRO */22)",
+      "sap_ref": "SUIM RSUSR005 / S_USER_PRO",
+      "remediation": "Scope S_USER_PRO to specific naming conventions (Z*) and remove ACTVT=22 on wildcard profiles."
+    },
+    {
+      "rule_id": "CA-04",
+      "object": "S_USER_GRP",
+      "fields": {
+        "CLASS": ["*"],
+        "ACTVT": ["01", "02", "05", "06"]
+      },
+      "severity": "high",
+      "title": "Unrestricted user master administration across all user groups (S_USER_GRP *)",
+      "sap_ref": "SUIM RSUSR005 / S_USER_GRP",
+      "remediation": "Restrict CLASS to non-privileged user groups so administrators cannot modify SUPER/BASIS accounts."
+    },
+    {
+      "rule_id": "CA-05",
+      "object": "S_USER_AGR",
+      "fields": {
+        "ACT_GROUP": ["*"],
+        "ACTVT": ["02"]
+      },
+      "severity": "high",
+      "title": "Unrestricted role modification across all roles (S_USER_AGR */02)",
+      "sap_ref": "SUIM RSUSR005 / S_USER_AGR",
+      "remediation": "Set S_USER_AGR to display (03) in production or scope ACT_GROUP by functional namespace."
+    },
+    {
+      "rule_id": "CA-06",
+      "object": "S_RFC",
+      "fields": {
+        "RFC_NAME": ["*"],
+        "ACTVT": ["16"]
+      },
+      "severity": "high",
+      "title": "Unrestricted remote function call execution (S_RFC */16)",
+      "sap_ref": "SUIM RSUSR005 / S_RFC",
+      "remediation": "Use UCON/STAUTHTRACE to replace RFC_NAME=* with explicit function modules or groups."
+    },
+    {
+      "rule_id": "CA-07",
+      "object": "S_BTCH_ADM",
+      "fields": {
+        "BTCADMIN": ["Y"]
+      },
+      "severity": "high",
+      "title": "Unrestricted background job administrator privilege (S_BTCH_ADM BTCADMIN=Y)",
+      "sap_ref": "SUIM RSUSR005 / S_BTCH_ADM",
+      "remediation": "Remove BTCADMIN=Y from dialog users; restrict to Basis batch administration roles."
+    },
+    {
+      "rule_id": "CA-08",
+      "object": "S_DATASET",
+      "fields": {
+        "FILENAME": ["*"],
+        "ACTVT": ["34"]
+      },
+      "severity": "high",
+      "title": "Unrestricted OS file write access from ABAP (S_DATASET */34)",
+      "sap_ref": "SUIM RSUSR005 / S_DATASET",
+      "remediation": "Restrict FILENAME to approved interface directories and validate logical file paths (FILE)."
+    }
+  ]
+}

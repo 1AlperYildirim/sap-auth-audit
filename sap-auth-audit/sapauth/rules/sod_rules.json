@@ -1,0 +1,131 @@
+{
+  "functions": {
+    "VENDOR_MASTER": ["XK01", "XK02", "FK01", "FK02", "MK01", "MK02", "BP"],
+    "AP_INVOICE": ["FB60", "MIRO"],
+    "PAYMENT_RUN": ["F110", "F-53", "F-58"],
+    "BANK_MASTER": ["FI01", "FI12"],
+    "PO_CREATE": ["ME21N", "ME22N"],
+    "PO_RELEASE": ["ME28", "ME29N"],
+    "GOODS_RECEIPT": ["MIGO"],
+    "CUSTOMER_MASTER": ["XD01", "XD02", "FD01", "FD02", "VD01", "VD02"],
+    "AR_POSTING": ["F-28", "FB70", "FB75"],
+    "USER_ADMIN": ["SU01", "SU10"],
+    "ROLE_ADMIN": ["PFCG", "SU24"],
+    "DEVELOPMENT": ["SE38", "SE80", "SE37", "SE24"],
+    "TRANSPORT": ["SE09", "SE10", "STMS"],
+    "GL_POSTING": ["FB50", "FB01"],
+    "GL_PARKED_RELEASE": ["FBV0"]
+  },
+  "rules": [
+    {
+      "rule_id": "SOD-01",
+      "func_a": "VENDOR_MASTER",
+      "func_b": "AP_INVOICE",
+      "severity": "critical",
+      "title": "Vendor Master Maintenance x AP Invoice Entry",
+      "risk": "User can create or alter a fictitious vendor and post fraudulent invoices against it.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Split vendor master maintenance (XK01/FK01/BP) and invoice posting (FB60/MIRO) across separate roles and users."
+    },
+    {
+      "rule_id": "SOD-02",
+      "func_a": "VENDOR_MASTER",
+      "func_b": "PAYMENT_RUN",
+      "severity": "critical",
+      "title": "Vendor Master Maintenance x Payment Execution",
+      "risk": "User can modify vendor bank details and execute unauthorized outgoing payments.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Separate vendor master maintenance from payment execution (F110/F-53/F-58) and enforce dual control on bank changes."
+    },
+    {
+      "rule_id": "SOD-03",
+      "func_a": "BANK_MASTER",
+      "func_b": "PAYMENT_RUN",
+      "severity": "critical",
+      "title": "Bank Master Maintenance x Payment Execution",
+      "risk": "User can define rogue bank routing data and trigger outgoing payment runs.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD FIN",
+      "remediation": "Restrict FI01/FI12 to treasury master data administrators with no payment run authorization."
+    },
+    {
+      "rule_id": "SOD-04",
+      "func_a": "USER_ADMIN",
+      "func_b": "ROLE_ADMIN",
+      "severity": "critical",
+      "title": "User Administration x Role Administration",
+      "risk": "User can build privileged roles in PFCG and assign them to any user account via SU01/SU10.",
+      "sap_ref": "SUIM RSUSR002 / SU01 + PFCG",
+      "remediation": "Separate user administration (SU01/SU10) from role design and profile generation (PFCG/SU24)."
+    },
+    {
+      "rule_id": "SOD-05",
+      "func_a": "AP_INVOICE",
+      "func_b": "PAYMENT_RUN",
+      "severity": "high",
+      "title": "AP Invoice Entry x Payment Execution",
+      "risk": "User can enter an accounts payable invoice and immediately disburse funds without independent review.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Segregate AP invoice entry (FB60/MIRO) from payment run execution (F110/F-53/F-58)."
+    },
+    {
+      "rule_id": "SOD-06",
+      "func_a": "PO_CREATE",
+      "func_b": "PO_RELEASE",
+      "severity": "high",
+      "title": "Purchase Order Creation x Purchase Order Release",
+      "risk": "User can create a purchase order and approve it unilaterally, bypassing procurement release strategy.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Remove ME28/ME29N from operational buyer roles and restrict PO release to authorized approvers."
+    },
+    {
+      "rule_id": "SOD-07",
+      "func_a": "PO_CREATE",
+      "func_b": "GOODS_RECEIPT",
+      "severity": "medium",
+      "title": "Purchase Order Creation x Goods Receipt Posting",
+      "risk": "User can order goods and confirm fictitious receipts in MIGO to trigger three-way match payment.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Segregate purchasing roles (ME21N/ME22N) from warehouse receiving roles (MIGO)."
+    },
+    {
+      "rule_id": "SOD-08",
+      "func_a": "AP_INVOICE",
+      "func_b": "GOODS_RECEIPT",
+      "severity": "medium",
+      "title": "AP Invoice Entry x Goods Receipt Posting",
+      "risk": "User can post both goods receipt and vendor invoice to manipulate three-way match controls.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD P2P",
+      "remediation": "Assign MIGO to warehouse personnel and FB60/MIRO to accounts payable clerks."
+    },
+    {
+      "rule_id": "SOD-09",
+      "func_a": "CUSTOMER_MASTER",
+      "func_b": "AR_POSTING",
+      "severity": "high",
+      "title": "Customer Master Maintenance x AR Billing/Incoming Payment",
+      "risk": "User can alter customer credit or master data and post receivables or credit memos to conceal fraud.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD O2C",
+      "remediation": "Separate customer master maintenance (XD01/FD01/VD01) from AR posting (F-28/FB70/FB75)."
+    },
+    {
+      "rule_id": "SOD-10",
+      "func_a": "DEVELOPMENT",
+      "func_b": "TRANSPORT",
+      "severity": "high",
+      "title": "ABAP Development x Transport Management",
+      "risk": "User can write custom ABAP code and import transports into production without peer review.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD BASIS",
+      "remediation": "Revoke SE38/SE80/SE37/SE24 in production and restrict STMS import rights to Basis administrators."
+    },
+    {
+      "rule_id": "SOD-11",
+      "func_a": "GL_POSTING",
+      "func_b": "GL_PARKED_RELEASE",
+      "severity": "medium",
+      "title": "GL Journal Entry x Parked Document Release",
+      "risk": "User can park and release general ledger journals without four-eyes review.",
+      "sap_ref": "SUIM RSUSR002 / GRC SoD FIN",
+      "remediation": "Split FB50/FB01 posting rights from FBV0 parked document release authorization."
+    }
+  ]
+}

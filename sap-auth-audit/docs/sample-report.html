@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SAP Authorization &amp; Basis Security Audit - S4P (100)</title>
+<style>
+  :root {
+    --bg: #f4f6f9; --card: #ffffff; --text: #1c2530; --muted: #5a6877;
+    --crit: #c92a2a; --high: #d9480f; --med: #e67700; --low: #2b8a3e; --border: #dde3ea;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+  .container { max-width: 1320px; margin: 0 auto; }
+  header { background: #0f2942; color: #fff; padding: 20px 24px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  header h1 { margin: 0; font-size: 20px; }
+  .meta { font-size: 14px; color: #cfd9e3; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--card); border-radius: 8px; padding: 16px 20px; border-left: 5px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .card.critical { border-left-color: var(--crit); }
+  .card.high { border-left-color: var(--high); }
+  .card.medium { border-left-color: var(--med); }
+  .card.low { border-left-color: var(--low); }
+  .card .label { font-size: 12px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .card .val { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  section { background: var(--card); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  h2 { margin: 0 0 14px 0; font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #f8fafc; font-weight: 600; color: var(--muted); }
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #fff; }
+  .badge.critical { background: var(--crit); }
+  .badge.high { background: var(--high); }
+  .badge.medium { background: var(--med); }
+  .badge.low { background: var(--low); }
+  .detail { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .controls { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .controls select, .controls input { padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; }
+  .controls input { flex: 1; min-width: 220px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>SAP Authorization &amp; Basis Security Audit Report</h1>
+      <div class="meta">Offline SUIM / PFCG / SoD / RZ11 Assessment</div>
+    </div>
+    <div class="meta">SID: <strong>S4P</strong> | Client: <strong>100</strong> | Env: <strong>PROD</strong> | Audit Date: <strong>2026-10-15</strong></div>
+  </header>
+
+  <div class="cards">
+    <div class="card critical"><div class="label">Critical</div><div class="val" id="count-critical">11</div></div>
+    <div class="card high"><div class="label">High</div><div class="val" id="count-high">13</div></div>
+    <div class="card medium"><div class="label">Medium</div><div class="val" id="count-medium">4</div></div>
+    <div class="card low"><div class="label">Low</div><div class="val" id="count-low">2</div></div>
+    <div class="card"><div class="label">Total Findings</div><div class="val" id="count-total">30</div></div>
+  </div>
+
+  <section>
+    <h2>Top-10 Risky Users (Weights: Critical=10, High=5, Medium=2, Low=1)</h2>
+    <table>
+      <thead><tr><th>#</th><th>User</th><th>Risk Score</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>ESAHIN</strong></td><td><strong>40</strong></td><td>2</td><td>4</td><td>0</td><td>0</td></tr>
+        <tr><td>2</td><td><strong>MOZ</strong></td><td><strong>40</strong></td><td>3</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>3</td><td><strong>FARSLAN</strong></td><td><strong>35</strong></td><td>2</td><td>3</td><td>0</td><td>0</td></tr>
+        <tr><td>4</td><td><strong>SYSTEM</strong></td><td><strong>14</strong></td><td>0</td><td>2</td><td>2</td><td>0</td></tr>
+        <tr><td>5</td><td><strong>AYILMAZ</strong></td><td><strong>10</strong></td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>6</td><td><strong>DOZTURK</strong></td><td><strong>10</strong></td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>7</td><td><strong>JKAYA</strong></td><td><strong>10</strong></td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>8</td><td><strong>SAP*</strong></td><td><strong>10</strong></td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>9</td><td><strong>CKARA</strong></td><td><strong>7</strong></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>10</td><td><strong>BDEMIR</strong></td><td><strong>5</strong></td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Audit Findings (30)</h2>
+    <div class="controls">
+      <select id="sevFilter" onchange="filterFindings()">
+        <option value="all">All Severities</option>
+        <option value="critical">Critical</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <input type="text" id="searchBox" oninput="filterFindings()" placeholder="Filter by user, rule ID, t-code, role, or keyword...">
+    </div>
+    <table id="findingsTable">
+      <thead><tr><th>Severity</th><th>User</th><th>Category</th><th>Rule</th><th>Finding</th><th>SAP Reference</th><th>Remediation</th></tr></thead>
+      <tbody>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>AYILMAZ</strong></td><td>SOD</td><td><code>SOD-01</code></td><td><strong>Vendor Master Maintenance x AP Invoice Entry</strong><div class="detail">VENDOR_MASTER (FK01, XK01, XK02) conflicts with AP_INVOICE (FB60, MIRO) via roles: Z_FI_AP_CLERK, Z_FI_VENDOR_MASTER</div></td><td>SUIM RSUSR002 / GRC SoD P2P</td><td>Split vendor master maintenance (XK01/FK01/BP) and invoice posting (FB60/MIRO) across separate roles and users.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>DOZTURK</strong></td><td>USER_LIFECYCLE</td><td><code>HYG-02</code></td><td><strong>Composite profile SAP_ALL assigned</strong><div class="detail">Profile SAP_ALL assigned in UST04 via roles: (profile SAP_ALL)</div></td><td>SUIM RSUSR002 / UST04</td><td>Remove SAP_ALL from dialog and administrative accounts; use firefighter emergency access instead.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>ESAHIN</strong></td><td>CRITICAL_AUTH</td><td><code>CA-03</code></td><td><strong>Unrestricted authorization profile assignment including SAP_ALL (S_USER_PRO */22)</strong><div class="detail">S_USER_PRO (PROFILE=*, ACTVT=22) via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR005 / S_USER_PRO</td><td>Scope S_USER_PRO to specific naming conventions (Z*) and remove ACTVT=22 on wildcard profiles.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>ESAHIN</strong></td><td>SOD</td><td><code>SOD-04</code></td><td><strong>User Administration x Role Administration</strong><div class="detail">USER_ADMIN (SU01) conflicts with ROLE_ADMIN (PFCG) via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR002 / SU01 + PFCG</td><td>Separate user administration (SU01/SU10) from role design and profile generation (PFCG/SU24).</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>FARSLAN</strong></td><td>CRITICAL_AUTH</td><td><code>CA-01</code></td><td><strong>ABAP Debugger with variable change/replace (S_DEVELOP DEBUG/02)</strong><div class="detail">S_DEVELOP (OBJTYPE=DEBUG, ACTVT=02) via roles: Z_DEV_PROD</div></td><td>SUIM RSUSR005 / S_DEVELOP</td><td>Set ACTVT=03 for S_DEVELOP OBJTYPE=DEBUG in production; grant ACTVT=02 only via firefighter.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>FARSLAN</strong></td><td>CRITICAL_TCODE</td><td><code>TC-SE38</code></td><td><strong>ABAP Editor access in production (SE38)</strong><div class="detail">Transaction SE38 granted via roles: Z_DEV_PROD</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Revoke SE38 in production systems; execute reports via custom transactions.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>JKAYA</strong></td><td>CRITICAL_TCODE</td><td><code>CA-00</code></td><td><strong>Unrestricted transaction access (S_TCODE = *)</strong><div class="detail">S_TCODE TCD=* granted via roles: Z_SUPPORT_ALL</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Replace wildcard &#x27;*&#x27; in S_TCODE with explicit transaction codes in PFCG role menu.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>MOZ</strong></td><td>CRITICAL_TCODE</td><td><code>TC-RZ10</code></td><td><strong>System profile parameter maintenance (RZ10)</strong><div class="detail">Transaction RZ10 granted via roles: Z_BASIS_ADMIN</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Restrict RZ10 to senior Basis administrators; use RZ11 for display.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>MOZ</strong></td><td>CRITICAL_TCODE</td><td><code>TC-SM49</code></td><td><strong>External OS command execution (SM49)</strong><div class="detail">Transaction SM49 granted via roles: Z_BASIS_ADMIN</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Restrict SM49 to emergency Basis profiles only.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>MOZ</strong></td><td>CRITICAL_TCODE</td><td><code>TC-SM59</code></td><td><strong>RFC destination maintenance (SM59)</strong><div class="detail">Transaction SM59 granted via roles: Z_BASIS_ADMIN</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Restrict SM59 modification access to core Basis administrators.</td></tr>
+        <tr data-severity="critical"><td><span class="badge critical">CRITICAL</span></td><td><strong>SAP*</strong></td><td>USER_LIFECYCLE</td><td><code>HYG-01</code></td><td><strong>Default superuser SAP* is unlocked</strong><div class="detail">Standard superuser SAP* is unlocked (UFLAG=0) via roles: (user master USR02)</div></td><td>SUIM RSUSR003 / USR02</td><td>Lock SAP* in SU01 across all clients and set profile parameter login/no_automatic_user_sapstar = 1.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>BDEMIR</strong></td><td>SOD</td><td><code>SOD-05</code></td><td><strong>AP Invoice Entry x Payment Execution</strong><div class="detail">AP_INVOICE (FB60, MIRO) conflicts with PAYMENT_RUN (F-53, F110) via roles: Z_FI_AP_CLERK, Z_FI_AP_PAYMENTS</div></td><td>SUIM RSUSR002 / GRC SoD P2P</td><td>Segregate AP invoice entry (FB60/MIRO) from payment run execution (F110/F-53/F-58).</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>CKARA</strong></td><td>SOD</td><td><code>SOD-06</code></td><td><strong>Purchase Order Creation x Purchase Order Release</strong><div class="detail">PO_CREATE (ME21N, ME22N) conflicts with PO_RELEASE (ME28, ME29N) via roles: Z_MM_BUYER, Z_MM_PO_RELEASE</div></td><td>SUIM RSUSR002 / GRC SoD P2P</td><td>Remove ME28/ME29N from operational buyer roles and restrict PO release to authorized approvers.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>ESAHIN</strong></td><td>CRITICAL_AUTH</td><td><code>CA-04</code></td><td><strong>Unrestricted user master administration across all user groups (S_USER_GRP *)</strong><div class="detail">S_USER_GRP (CLASS=*, ACTVT=01,02,05,06) via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR005 / S_USER_GRP</td><td>Restrict CLASS to non-privileged user groups so administrators cannot modify SUPER/BASIS accounts.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>ESAHIN</strong></td><td>CRITICAL_AUTH</td><td><code>CA-05</code></td><td><strong>Unrestricted role modification across all roles (S_USER_AGR */02)</strong><div class="detail">S_USER_AGR (ACT_GROUP=*, ACTVT=02) via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR005 / S_USER_AGR</td><td>Set S_USER_AGR to display (03) in production or scope ACT_GROUP by functional namespace.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>ESAHIN</strong></td><td>CRITICAL_TCODE</td><td><code>TC-PFCG</code></td><td><strong>Role Maintenance and Profile Generation (PFCG)</strong><div class="detail">Transaction PFCG granted via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Disable role editing in production; transport roles from DEV via STMS.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>ESAHIN</strong></td><td>CRITICAL_TCODE</td><td><code>TC-SU01</code></td><td><strong>User Master Maintenance (SU01)</strong><div class="detail">Transaction SU01 granted via roles: Z_SEC_ADMIN</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Restrict SU01 to dedicated security administrators and scope by user group (S_USER_GRP).</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>FARSLAN</strong></td><td>SOD</td><td><code>SOD-10</code></td><td><strong>ABAP Development x Transport Management</strong><div class="detail">DEVELOPMENT (SE38, SE80) conflicts with TRANSPORT (STMS) via roles: Z_DEV_PROD</div></td><td>SUIM RSUSR002 / GRC SoD BASIS</td><td>Revoke SE38/SE80/SE37/SE24 in production and restrict STMS import rights to Basis administrators.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>FARSLAN</strong></td><td>CRITICAL_TCODE</td><td><code>TC-SE80</code></td><td><strong>Object Navigator access in production (SE80)</strong><div class="detail">Transaction SE80 granted via roles: Z_DEV_PROD</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Remove SE80 from production roles.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>FARSLAN</strong></td><td>CRITICAL_TCODE</td><td><code>TC-STMS</code></td><td><strong>Transport Management System (STMS)</strong><div class="detail">Transaction STMS granted via roles: Z_DEV_PROD</div></td><td>SUIM RSUSR002 / S_TCODE</td><td>Limit STMS import permissions to Basis release management team.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>MOZ</strong></td><td>CRITICAL_AUTH</td><td><code>CA-06</code></td><td><strong>Unrestricted remote function call execution (S_RFC */16)</strong><div class="detail">S_RFC (RFC_NAME=*, ACTVT=16) via roles: Z_BASIS_ADMIN</div></td><td>SUIM RSUSR005 / S_RFC</td><td>Use UCON/STAUTHTRACE to replace RFC_NAME=* with explicit function modules or groups.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>MOZ</strong></td><td>CRITICAL_AUTH</td><td><code>CA-07</code></td><td><strong>Unrestricted background job administrator privilege (S_BTCH_ADM BTCADMIN=Y)</strong><div class="detail">S_BTCH_ADM (BTCADMIN=Y) via roles: Z_BASIS_ADMIN</div></td><td>SUIM RSUSR005 / S_BTCH_ADM</td><td>Remove BTCADMIN=Y from dialog users; restrict to Basis batch administration roles.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>SYSTEM</strong></td><td>PARAMETER</td><td><code>PARAM-01</code></td><td><strong>Automatic SAP* fallback user must be disabled</strong><div class="detail">login/no_automatic_user_sapstar = 0 (expected eq 1) via roles: (system profile RSPARAM)</div></td><td>RZ11 / login/no_automatic_user_sapstar</td><td>Set login/no_automatic_user_sapstar = 1 in DEFAULT.PFL and restart the application server.</td></tr>
+        <tr data-severity="high"><td><span class="badge high">HIGH</span></td><td><strong>SYSTEM</strong></td><td>PARAMETER</td><td><code>PARAM-02</code></td><td><strong>Security Audit Log (SM19/SM20) must be active</strong><div class="detail">rsau/enable = 0 (expected eq 1) via roles: (system profile RSPARAM)</div></td><td>RZ11 / SM19 / rsau/enable</td><td>Set rsau/enable = 1 and configure static audit filters in SM19/RSAU_CONFIG.</td></tr>
+        <tr data-severity="medium"><td><span class="badge medium">MEDIUM</span></td><td><strong>CKARA</strong></td><td>SOD</td><td><code>SOD-07</code></td><td><strong>Purchase Order Creation x Goods Receipt Posting</strong><div class="detail">PO_CREATE (ME21N, ME22N) conflicts with GOODS_RECEIPT (MIGO) via roles: Z_MM_BUYER, Z_MM_WAREHOUSE</div></td><td>SUIM RSUSR002 / GRC SoD P2P</td><td>Segregate purchasing roles (ME21N/ME22N) from warehouse receiving roles (MIGO).</td></tr>
+        <tr data-severity="medium"><td><span class="badge medium">MEDIUM</span></td><td><strong>GCELIK</strong></td><td>USER_LIFECYCLE</td><td><code>HYG-03</code></td><td><strong>Dormant unlocked dialog user</strong><div class="detail">Last logon 2026-02-17 (240 days ago &gt; 90d) via roles: Z_FI_GL_ACCOUNTANT</div></td><td>SUIM RSUSR200 / USR02</td><td>Lock or expire dialog users inactive beyond the policy threshold and review role assignments.</td></tr>
+        <tr data-severity="medium"><td><span class="badge medium">MEDIUM</span></td><td><strong>SYSTEM</strong></td><td>PARAMETER</td><td><code>PARAM-04</code></td><td><strong>Minimum password length below baseline</strong><div class="detail">login/min_password_lng = 6 (expected ge 8) via roles: (system profile RSPARAM)</div></td><td>RZ11 / login/min_password_lng</td><td>Set login/min_password_lng &gt;= 8 (or 12+ per corporate identity policy) in DEFAULT.PFL.</td></tr>
+        <tr data-severity="medium"><td><span class="badge medium">MEDIUM</span></td><td><strong>SYSTEM</strong></td><td>PARAMETER</td><td><code>PARAM-05</code></td><td><strong>Failed logon lockout threshold too permissive</strong><div class="detail">login/fails_to_user_lock = 12 (expected le 5) via roles: (system profile RSPARAM)</div></td><td>RZ11 / login/fails_to_user_lock</td><td>Set login/fails_to_user_lock &lt;= 5 to mitigate brute-force password guessing.</td></tr>
+        <tr data-severity="low"><td><span class="badge low">LOW</span></td><td><strong>HKOC</strong></td><td>USER_LIFECYCLE</td><td><code>HYG-04</code></td><td><strong>Unlocked dialog user never logged on (&gt;30 days since creation)</strong><div class="detail">Never logged on, created 2026-07-07 (100 days ago) via roles: Z_SD_CLERK</div></td><td>SUIM RSUSR200 / USR02</td><td>Lock unused accounts provisioned over 30 days ago that have no initial logon date (TRDAT).</td></tr>
+        <tr data-severity="low"><td><span class="badge low">LOW</span></td><td><strong>LTUNC</strong></td><td>USER_LIFECYCLE</td><td><code>HYG-05</code></td><td><strong>Excessive effective single roles assigned (&gt;12)</strong><div class="detail">14 effective single roles assigned via roles: Z_DISP_01, Z_DISP_02, Z_DISP_03, Z_DISP_04, Z_DISP_05, Z_DISP_06, Z_DISP_07, Z_DISP_08, Z_DISP_09, Z_DISP_10, Z_DISP_11, Z_DISP_12, Z_DISP_13, Z_DISP_14</div></td><td>SUIM RSUSR002 / AGR_USERS</td><td>Perform user access review to prune redundant roles from job transfers (privilege creep).</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+<script>
+function filterFindings() {
+  var sev = document.getElementById('sevFilter').value;
+  var q = document.getElementById('searchBox').value.toLowerCase();
+  var rows = document.querySelectorAll('#findingsTable tbody tr');
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    var matchSev = (sev === 'all') || (r.getAttribute('data-severity') === sev);
+    var matchText = !q || (r.textContent.toLowerCase().indexOf(q) !== -1);
+    r.style.display = (matchSev && matchText) ? '' : 'none';
+  }
+}
+</script>
+</body>
+</html>
