@@ -77,7 +77,6 @@ def generate_sample_data(out_dir: Path | None = None) -> None:
     agr_users: List[Dict[str, str]] = []
     ust04: List[Dict[str, str]] = [
         {"BNAME": "DOZTURK", "PROFILE": "SAP_ALL"},
-        {"BNAME": "DDIC", "PROFILE": "SAP_ALL"},
     ]
 
     # Standard and technical accounts (USTYP B/C/S)
